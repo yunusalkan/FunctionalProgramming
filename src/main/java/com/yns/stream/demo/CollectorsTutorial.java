@@ -96,5 +96,6 @@ public class CollectorsTutorial {
         System.out.println("printlnImmutablePersonList");
         System.out.println(personList);
         //If we add personList.add(anyInteger) we'l get runtimeException beacouse of our list is unmodifiable
+        //personList.add(25);
     }
 }
