@@ -31,51 +31,21 @@ public class CollectorsTutorial {
     }
 
     public static void main(String[] args) {
-        List<String> namesOfOlderThan30 =
-        createPerson().stream()
-                .filter(p -> p.getAge() > 30)
-                .map(Person::getName)
-                .map(String::toUpperCase)
-                .reduce(new ArrayList<String>(),
-                        (names, name) -> {
-                            names.add(name);
-                            return names;
-                        },
-                        (names1, names2) -> {
-                            names1.addAll(names2);
-                            return names1;
-                        }
-                       );
-        System.out.println(namesOfOlderThan30);
 
-        // or use collectors
-        namesOfOlderThan30 = createPerson().parallelStream()
-                .filter(p -> p.getAge() > 30)
-                .map(Person::getName)
-                .map(String::toUpperCase)
-                .collect(Collectors.toList());
+        printlnPersonWhoOlderThan30WithCollectionWay();
 
-        System.out.println(namesOfOlderThan30);
+        printlnPersonWhoOlderThan30WithOldStreamWay();
 
-        // to create map from list...
-        System.out.println(createPerson().stream()
-                //.collect(Collectors.toMap(person -> person.getName(), person -> person.getAge()))
-                .collect(Collectors.toMap(Person::getName, Person::getAge))
-        );
+        printlnPersonWhoOlderThan30WithComma();
 
-        // to create immutable list
-        List<Integer> ages = createPerson().stream()
-                .map(Person::getAge)
-                .collect(Collectors.toUnmodifiableList());
+        printlnCollectedPersonMap();
 
-        // This line throws RuntimeException beacouse of ages is immutable and so can't be changed
-        // ages.add(12);
-
-        System.out.println(ages);
+        printlnImmutablePersonList();
 
     }
 
     public static void printlnPersonWhoOlderThan30WithOldStreamWay() {
+        System.out.println("printlnPersonWhoOlderThan30WithOldStreamWay");
         System.out.println(createPerson().stream()
                            .filter(person -> person.getAge() > 30)
                            .map(Person::getName)
@@ -94,15 +64,37 @@ public class CollectorsTutorial {
     }
 
     public static void printlnPersonWhoOlderThan30WithCollectionWay() {
+        System.out.println("printlnPersonWhoOlderThan30WithCollectionWay");
         System.out.println(createPerson().stream()
-                            .filter(person -> person.getAge() > 30));
+                            .filter(person -> person.getAge() > 30)
+                            .map(Person::getName)
+                            .map(String::toUpperCase)
+                            .collect(Collectors.toList()));
     }
 
     public static void printlnPersonWhoOlderThan30WithComma() {
+        System.out.println("printlnPersonWhoOlderThan30WithComma");
         System.out.println(createPerson().stream()
                             .filter(person -> person.getAge() > 30)
                             .map(Person::getName)
                             .map(String::toUpperCase)
                             .collect(Collectors.joining(", ")));
+    }
+
+    public static void printlnCollectedPersonMap() {
+        System.out.println("printlnCollectedPersonMap");
+        System.out.println(createPerson().stream()
+                            // other way
+                            //.collect(Collectors.toMap(person -> person.getName(), person -> person.getAge()))
+                            .collect(Collectors.toMap(Person::getName, Person::getAge)));
+    }
+
+    public static void printlnImmutablePersonList() {
+        List<Integer> personList = createPerson().stream()
+                                    .map(Person::getAge)
+                                    .collect(Collectors.toUnmodifiableList());
+        System.out.println("printlnImmutablePersonList");
+        System.out.println(personList);
+        //If we add personList.add(anyInteger) we'l get runtimeException beacouse of our list is unmodifiable
     }
 }
