@@ -6,7 +6,11 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 
 public class CollectorsTutorial {
 
@@ -42,6 +46,74 @@ public class CollectorsTutorial {
 
         printlnImmutablePersonList();
 
+        printlnOddAndEvenAgedPersonWithCustomList();
+
+        printlnGroupedPersonByName();
+
+        printlnGroupedAgesByName();
+
+    }
+
+    private static void printlnGroupedPersonByName() {
+        List<Person> personList = List.of(
+                new Person("Sara", 20),
+                new Person("Sara", 22),
+                new Person("Bob", 20),
+                new Person("Paula", 32),
+                new Person("Paul", 32),
+                new Person("Jack", 3),
+                new Person("Jack", 72),
+                new Person("Jill", 11)
+        );
+
+        Map<String, List<Person>> byName = personList.stream()
+                                            .collect(Collectors.groupingBy(Person::getName));
+        System.out.println("printlnGroupedPersonByName");
+        System.out.println(byName);
+        System.out.println();
+
+    }
+
+    private static void printlnGroupedAgesByName() {
+        List<Person> personList = List.of(
+                new Person("Sara", 20),
+                new Person("Sara", 22),
+                new Person("Bob", 20),
+                new Person("Paula", 32),
+                new Person("Paul", 32),
+                new Person("Jack", 3),
+                new Person("Jack", 72),
+                new Person("Jill", 11)
+        );
+
+        Map<String, List<Integer>> ageByName = personList.stream()
+                .collect(Collectors.groupingBy(Person::getName, mapping(Person::getAge, toList())));
+        System.out.println("printlnGroupedPersonByName");
+        System.out.println(ageByName);
+        System.out.println();
+
+    }
+
+    private static void printlnOddAndEvenAgedPersonWithCustomList() {
+       List<Person> personList = List.of(
+                new Person("Sara", 20),
+                new Person("Sara", 22),
+                new Person("Bob", 20),
+                new Person("Paula", 32),
+                new Person("Paul", 32),
+                new Person("Jack", 3),
+                new Person("Jack", 72),
+                new Person("Jill", 11)
+        );
+
+        System.out.println("printlnOddAndEvenAgedPersonWithCustomList");
+        System.out.println(
+       personList.stream()
+               .collect(Collectors.partitioningBy(person -> person.getAge() % 2 == 0)));
+
+        final Map<Boolean, List<Person>> collect = personList.stream()
+                .collect(Collectors.partitioningBy(person -> person.getAge() % 2 == 0));
+        System.out.println();
     }
 
     public static void printlnPersonWhoOlderThan30WithOldStreamWay() {
@@ -61,6 +133,7 @@ public class CollectorsTutorial {
                                    })
 
         );
+        System.out.println();
     }
 
     public static void printlnPersonWhoOlderThan30WithCollectionWay() {
@@ -69,7 +142,8 @@ public class CollectorsTutorial {
                             .filter(person -> person.getAge() > 30)
                             .map(Person::getName)
                             .map(String::toUpperCase)
-                            .collect(Collectors.toList()));
+                            .collect(toList()));
+        System.out.println();
     }
 
     public static void printlnPersonWhoOlderThan30WithComma() {
@@ -79,6 +153,7 @@ public class CollectorsTutorial {
                             .map(Person::getName)
                             .map(String::toUpperCase)
                             .collect(Collectors.joining(", ")));
+        System.out.println();
     }
 
     public static void printlnCollectedPersonMap() {
@@ -87,6 +162,7 @@ public class CollectorsTutorial {
                             // other way
                             //.collect(Collectors.toMap(person -> person.getName(), person -> person.getAge()))
                             .collect(Collectors.toMap(Person::getName, Person::getAge)));
+        System.out.println();
     }
 
     public static void printlnImmutablePersonList() {
@@ -97,5 +173,6 @@ public class CollectorsTutorial {
         System.out.println(personList);
         //If we add personList.add(anyInteger) we'l get runtimeException beacouse of our list is unmodifiable
         //personList.add(25);
+        System.out.println();
     }
 }
