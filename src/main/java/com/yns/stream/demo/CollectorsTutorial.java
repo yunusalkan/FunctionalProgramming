@@ -3,14 +3,13 @@ package com.yns.stream.demo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toList;
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.*;
+
 
 public class CollectorsTutorial {
 
@@ -34,6 +33,18 @@ public class CollectorsTutorial {
       );
     }
 
+    static List<Person> createContainingRepeatedNamesPerson() {
+        return  List.of(
+                new Person("Sara", 20),
+                new Person("Sara", 22),
+                new Person("Bob", 20),
+                new Person("Paula", 32),
+                new Person("Paul", 32),
+                new Person("Jack", 3),
+                new Person("Jack", 72),
+                new Person("Jill", 11));
+    }
+
     public static void main(String[] args) {
 
         printlnPersonWhoOlderThan30WithCollectionWay();
@@ -52,21 +63,16 @@ public class CollectorsTutorial {
 
         printlnGroupedAgesByName();
 
+        printlnCountOfNamesOfOccurencePersonList();
+
+        printlnPersonWhoMaxMinBy();
+
+        printlnAllPersonNamesCharsUsingFlatMap();
+
     }
 
     private static void printlnGroupedPersonByName() {
-        List<Person> personList = List.of(
-                new Person("Sara", 20),
-                new Person("Sara", 22),
-                new Person("Bob", 20),
-                new Person("Paula", 32),
-                new Person("Paul", 32),
-                new Person("Jack", 3),
-                new Person("Jack", 72),
-                new Person("Jill", 11)
-        );
-
-        Map<String, List<Person>> byName = personList.stream()
+        Map<String, List<Person>> byName = createContainingRepeatedNamesPerson().stream()
                                             .collect(Collectors.groupingBy(Person::getName));
         System.out.println("printlnGroupedPersonByName");
         System.out.println(byName);
@@ -75,18 +81,7 @@ public class CollectorsTutorial {
     }
 
     private static void printlnGroupedAgesByName() {
-        List<Person> personList = List.of(
-                new Person("Sara", 20),
-                new Person("Sara", 22),
-                new Person("Bob", 20),
-                new Person("Paula", 32),
-                new Person("Paul", 32),
-                new Person("Jack", 3),
-                new Person("Jack", 72),
-                new Person("Jill", 11)
-        );
-
-        Map<String, List<Integer>> ageByName = personList.stream()
+        Map<String, List<Integer>> ageByName = createContainingRepeatedNamesPerson().stream()
                 .collect(Collectors.groupingBy(Person::getName, mapping(Person::getAge, toList())));
         System.out.println("printlnGroupedPersonByName");
         System.out.println(ageByName);
@@ -95,23 +90,12 @@ public class CollectorsTutorial {
     }
 
     private static void printlnOddAndEvenAgedPersonWithCustomList() {
-       List<Person> personList = List.of(
-                new Person("Sara", 20),
-                new Person("Sara", 22),
-                new Person("Bob", 20),
-                new Person("Paula", 32),
-                new Person("Paul", 32),
-                new Person("Jack", 3),
-                new Person("Jack", 72),
-                new Person("Jill", 11)
-        );
-
         System.out.println("printlnOddAndEvenAgedPersonWithCustomList");
         System.out.println(
-       personList.stream()
+                createContainingRepeatedNamesPerson().stream()
                .collect(Collectors.partitioningBy(person -> person.getAge() % 2 == 0)));
 
-        final Map<Boolean, List<Person>> collect = personList.stream()
+        final Map<Boolean, List<Person>> collect = createContainingRepeatedNamesPerson().stream()
                 .collect(Collectors.partitioningBy(person -> person.getAge() % 2 == 0));
         System.out.println();
     }
@@ -175,4 +159,64 @@ public class CollectorsTutorial {
         //personList.add(25);
         System.out.println();
     }
+
+    public static void printlnCountOfNamesOfOccurencePersonList() {
+
+        Map<String, Long> repeatedNameCountMap = createContainingRepeatedNamesPerson().stream()
+                                                .collect(groupingBy(Person::getName, counting()));
+
+        System.out.println("printlnCountOfNamesOfOccurencePersonList");
+        System.out.println(repeatedNameCountMap);
+        System.out.println();
+
+        //If we don't want to use Long type, instead of using Integer, we can first collect and then count
+        Map<String, Integer> repeatedNamesCountByInteger = createContainingRepeatedNamesPerson().stream()
+                                                            .collect(groupingBy(Person::getName, collectingAndThen(counting(), Long::intValue)));
+        System.out.println("printlnCountOfNamesOfOccurencePersonListInteger");
+        System.out.println(repeatedNamesCountByInteger);
+        System.out.println();
+
+    }
+
+    private static void printlnPersonWhoMaxMinBy() {
+        System.out.println("printlnPersonWhoMaxByAge");
+        System.out.println(createContainingRepeatedNamesPerson().stream()
+                .collect(maxBy(comparing(Person::getAge))));
+
+        System.out.println("printlnPersonWhoMinByAge");
+        System.out.println(createContainingRepeatedNamesPerson().stream()
+                .collect(minBy(comparing(Person::getAge))));
+
+        System.out.println("printlnPersonNameWhoMinByAge");
+        String personName = createContainingRepeatedNamesPerson().stream().
+                        collect(collectingAndThen(maxBy(comparing(Person::getAge)),
+                                person -> person.map(Person::getName).orElse("")));
+        System.out.println(personName);
+        System.out.println();
+    }
+
+    private static void printlnGroupingAndFilteringPerson() {
+
+        System.out.println("printlnGroupingAndFilteringPerson");
+        System.out.println(createPerson().stream()
+                            .collect(groupingBy(Person::getAge,
+                                                mapping(Person::getName,
+                                                        filtering(name -> name.length() > 4,
+                                                        toList())))));
+        System.out.println();
+
+    }
+
+    private static void printlnAllPersonNamesCharsUsingFlatMap() {
+
+        //flatMap converts all objects like list, set, map vs etc. to single object
+        System.out.println("");
+        System.out.println(createPerson().stream()
+                .map(Person::getName)
+                .flatMap(name -> Stream.of(name.split(""))).collect(toList()));
+        System.out.println();
+
+
+    }
+
 }
