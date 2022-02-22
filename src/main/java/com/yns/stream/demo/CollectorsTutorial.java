@@ -70,6 +70,8 @@ public class CollectorsTutorial {
 
         printlnAllPersonNamesCharsUsingFlatMap();
 
+        printlnAllUniqueCharsOfPersonNamesGroupingByAgeUsingFlatMap();
+
     }
 
     private static void printlnGroupedPersonByName() {
@@ -211,10 +213,22 @@ public class CollectorsTutorial {
 
     private static void printlnAllPersonNamesCharsUsingFlatMap() {
         //flatMap converts all objects like list, set, map vs etc. to single object
-        System.out.println("");
+        System.out.println("printlnAllPersonNamesCharsUsingFlatMap");
         System.out.println(createPerson().stream()
                 .map(Person::getName)
                 .flatMap(name -> Stream.of(name.split(""))).collect(toList()));
+        System.out.println();
+    }
+
+    private static void printlnAllUniqueCharsOfPersonNamesGroupingByAgeUsingFlatMap() {
+        System.out.println("printlnAllUniqueCharsOfPersonNamesGroupingByAgeUsingFlatMap");
+        System.out.println(
+                createPerson().stream()
+                        .collect(groupingBy(Person::getAge,
+                                mapping(person -> person.getName().toUpperCase(Locale.ROOT),
+                                        flatMapping(name -> Stream.of(name.split("")),
+                                                toSet()))))
+        );
         System.out.println();
     }
 
