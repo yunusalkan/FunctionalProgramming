@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -169,9 +170,10 @@ public class CollectorsTutorial {
         System.out.println(repeatedNameCountMap);
         System.out.println();
 
+        Function<Long, Integer> intConverter = (number) -> number.intValue() * 2;
         //If we don't want to use Long type, instead of using Integer, we can first collect and then count
         Map<String, Integer> repeatedNamesCountByInteger = createContainingRepeatedNamesPerson().stream()
-                                                            .collect(groupingBy(Person::getName, collectingAndThen(counting(), Long::intValue)));
+                                                            .collect(groupingBy(Person::getName, collectingAndThen(counting(), (number) -> number.intValue() * 2)));
         System.out.println("printlnCountOfNamesOfOccurencePersonListInteger");
         System.out.println(repeatedNamesCountByInteger);
         System.out.println();
@@ -208,15 +210,12 @@ public class CollectorsTutorial {
     }
 
     private static void printlnAllPersonNamesCharsUsingFlatMap() {
-
         //flatMap converts all objects like list, set, map vs etc. to single object
         System.out.println("");
         System.out.println(createPerson().stream()
                 .map(Person::getName)
                 .flatMap(name -> Stream.of(name.split(""))).collect(toList()));
         System.out.println();
-
-
     }
 
 }
