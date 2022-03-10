@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cc1e21e1-f2cc-4749-b466-2ca3a176d3ff" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yns/stream/demo/Solution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/input.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yns/stream/demo/CollectorsTutorial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yns/stream/demo/CollectorsTutorial.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yns/stream/demo/CollectorsTutorial.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yns/stream/demo/CollectorsTutorial.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +22,13 @@
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -59,6 +66,9 @@
         <option name="vmOptionsForImporter" value="-Xmx768m" />
       </MavenImportingSettings>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="25" />
@@ -118,18 +128,24 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/yns/stream/demo" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/com/yns/stream/demo" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.yns.stream.demo" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Solution2">
     <configuration name="CollectorsTutorial" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.yns.stream.demo.CollectorsTutorial" />
       <module name="Stream-Demo" />
@@ -143,8 +159,36 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Solution" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.yns.stream.demo.Solution" />
+      <module name="Stream-Demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yns.stream.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Solution2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.yns.stream.demo.Solution2" />
+      <module name="Stream-Demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yns.stream.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Solution2" />
+        <item itemvalue="Application.Solution" />
         <item itemvalue="Application.CollectorsTutorial" />
       </list>
     </recent_temporary>
@@ -219,6 +263,13 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="copyOfS.hashIsZero" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pom.xml">
